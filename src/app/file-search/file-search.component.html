@@ -1,0 +1,36 @@
+<p>file-search works!</p>
+<div class="container-md">
+
+<div>
+  <mat-form-field appearance="fill">
+    <mat-label for="dir">Directory:</mat-label>
+    <input matInput id="dir" [(ngModel)]="searchData.dir"  />
+  </mat-form-field>
+</div>
+
+<div>
+  <mat-form-field appearance="fill">
+    <mat-label for="filter">Filter:</mat-label>
+    <input matInput id="filter" [(ngModel)]="searchData.filter" />
+  </mat-form-field>
+</div>
+  <!-- <label for="ext">Extension:</label>
+  <input id="ext" [(ngModel)]="searchData.ext" /> -->
+
+  <button mat-fab extended color="primary"  (click)="searchFiles()">Buscar archivos</button>
+
+  <div *ngIf="searchResults.length > 0" class="result-container">
+    <h3 class="mt-5">Tu palabra fue encontrada en los siguientes archivos:</h3>
+    <mat-list>
+    <ul>
+      <mat-list-item *ngFor="let result of searchResults;  let i = index" class="list-group-item">
+        <!--         {{ result.content }} - <a [href]="getFileUrl(result.file)" target="_blank">{{result.file}}</a>
+          {{ result.content }}
+        -->
+            {{i + 1}}. <a [href]="getFileUrl(result.file)" target="_blank">{{ result.file }}</a>, LINEA {{result.line}}, COLUMNA: {{result.column}}
+
+      </mat-list-item>
+    </ul>
+    </mat-list>
+  </div>
+</div>
