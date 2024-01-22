@@ -4,9 +4,6 @@ import { FileSearchService } from '../file-search.service';
 
 @Component({
   selector: 'app-file-search',
-  //template: `
-  //  <button (click)="searchFiles()">Search Files</button>
-  //`
   templateUrl: './file-search.component.html'
 })
 export class FileSearchComponent {
@@ -20,16 +17,21 @@ export class FileSearchComponent {
   };
 
   searchResults: any[] = [];
-  searchForm: any;
+  totalFiles: number = 0;
+  totalOccurrences: number = 0;
+  extensionCounts: any;
+  highlightedRow: any;
+  //searchForm: any; era para el required, pero resetea angular material
 
   searchFiles() {
-
 
       this.fileSearchService.searchFiles(this.searchData).subscribe(
         (result) => {
           console.log('Search result:', result);
-          this.searchResults = result;
-          // Handle the result as needed
+          this.searchResults = result.result;
+          this.totalFiles = result.totalFiles;
+          this.totalOccurrences = result.totalOccurrences;
+          this.highlightedRow = result.highlightedRow;
         },
         (error) => {
           console.error('Error:', error);
@@ -41,6 +43,11 @@ export class FileSearchComponent {
 
   getFileUrl(filePath: string): string{
     return `http://localhost:3000/static/${filePath}`;
+  }
+
+  // Función para resaltar el filtro en la fila
+  highlightFilter(row: string, filter: string): string {
+    return row.replace(new RegExp(filter, 'gi'), match => `<span class="highlight">${match}</span>`);
   }
 }
 

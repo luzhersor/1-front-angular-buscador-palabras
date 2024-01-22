@@ -14,4 +14,6 @@ export class FileSearchService {
   searchFiles(data: any): Observable<any> {
     return this.http.post(this.apiUrl, data);
   }
+
+  
 }
